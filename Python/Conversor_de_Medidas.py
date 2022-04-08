@@ -51,21 +51,16 @@ def apresentaConversao(primeira, segunda):
     print('-' * 60, end="")
     print("*")
 
-
-def start():
-    apresentacao("Conversor de Medidas")
-    enquadro(medidas)
-    op = int(input("Insira a opção de medida que você deseja converter\n-> "))
-    check(op)
-    avaliacao(op)
-    return op
-
+def apresentaUnidades(listaUnidades):
+    enquadro(listaUnidades)
+    uniNow = int(input("Qual Medida Você está usando agora?\n-> "))
+    uniAfter = int(input("Para Qual Medida Você Deseja Converter?\n-> "))
+    value = float(input("\nQual valor deve ser covertido?\n-> "))
+    return uniNow, uniAfter, value
 
 def enquadro(lista):
     l = len(lista)
-
     print("|", end="")
-
     for i in range(l):
         j = i + 1
         if i % 2 == 0:
@@ -81,20 +76,6 @@ def enquadro(lista):
     print("_" * 60, end='')
     print("|", end='\n\n\n')
 
-
-def check(op):
-    while True:
-        if op in list(range(1, 6)):
-            return op
-
-        else:
-            op = int(input('Deseja [1] Continuar     [2] Sair\n-> '))
-            if op == 1:
-                start()
-            else:
-                break
-
-
 def avaliacao(op):
     if op == 1:
         v, nUnidaed = distancia()
@@ -109,30 +90,44 @@ def avaliacao(op):
     resultado(v, nUnidaed)
     check(-1)
 
+def check(op):
+    while True:
+        if op in list(range(1, 6)):
+            return op
+
+        else:
+            op = int(input('Deseja [1] Continuar     [2] Sair\n-> '))
+            if op == 1:
+                start()
+            else:
+                break
+
+def resultado(r, novaUnidade):
+    print("|", end="")
+    for i in range(1):
+        print(f"Resultado: {r:,.2f} {novaUnidade}".center(60), end="|")
+    print("\n|", end='')
+    print("_" * 60, end='')
+    print("|", end='\n\n\n')
+
 
 def distancia():
     apresentacao("Distância")
     x, y, value = apresentaUnidades(uniDistancia)
-
     if x == 1 and y == 2:
         value = value * 1000
     elif x == 1 and y == 3:
         value = value * 1000**2
-
     elif x == 2 and y == 1:
         value = value / 1000
     elif x == 2 and y == 3:
         value = value * 1000
-
     elif x == 3 and y == 2:
         value = value / 1000
     elif x == 3 and y == 1:
         value = value / 1000**2
     apresentaConversao(uniDistancia[x-1], uniDistancia[y-1])
     return value, uniDistancia[y-1]
-
-
-
 
 def massa():
     apresentacao("Massa")
@@ -141,7 +136,6 @@ def massa():
         value = value * 1000
     elif x == 1 and y == 3:
         value = value * 1000 ** 2
-
     elif x == 2 and y == 1:
         value = value / 1000
     elif x == 2 and y == 3:
@@ -152,9 +146,7 @@ def massa():
     elif x == 3 and y == 1:
         value = value / 1000 ** 2
     apresentaConversao(uniMassa[x-1], uniMassa[y-1])
-
     return value, uniMassa[y-1]
-
 
 def temperatura():
     apresentacao("Temperatura")
@@ -176,22 +168,19 @@ def temperatura():
         value = (value - 273.15) * 1.8 + 32
     elif x == 3 and y == 1:
         value = value - 273.15
-    apresentaConversao(uniTemperatura[x], uniTemperatura[y])
-
+    apresentaConversao(uniTemperatura[x-1], uniTemperatura[y-1])
     return value, uniTemperatura[y-1]
 
 def velocidade():
     apresentacao("Velocidade")
     x, y, value = apresentaUnidades(uniVelocidade)
-
     if x == 1 and y == 2:
         value = value / 3.6
     elif x == 2 and y == 1:
         value = value * 3,6
-    apresentaConversao(uniVelocidade[x], uniVelocidade[y])
+    apresentaConversao(uniVelocidade[x-1], uniVelocidade[y-1])
 
     return value, uniTemperatura[y-1]
-
 
 def tempo():
     apresentacao("Tempo")
@@ -213,28 +202,16 @@ def tempo():
         value = value / 60**2
     elif x == 3 and y == 2:
         value = value / 60
-    apresentaConversao(uniTempo[x], uniTempo[y])
+    apresentaConversao(uniTempo[x-1], uniTempo[y-1])
 
     return value, uniTempo[y-1]
 
-
-def apresentaUnidades(listaUnidades):
-    enquadro(listaUnidades)
-
-
-    uniNow = int(input("Qual Medida Você está usando agora?\n-> "))
-    uniAfter = int(input("Para Qual Medida Você Deseja Converter?\n-> "))
-    value = float(input("\nQual valor deve ser covertido?\n-> "))
-
-
-    return uniNow, uniAfter, value
-def resultado(r, novaUnidade):
-    print("|", end="")
-    for i in range(1):
-        print(f"Resultado: {r:,.2f} {novaUnidade}".center(60), end="|")
-
-    print("\n|", end='')
-    print("_" * 60, end='')
-    print("|", end='\n\n\n')
+def start():
+    apresentacao("Conversor de Medidas")
+    enquadro(medidas)
+    op = int(input("Insira a opção de medida que você deseja converter\n-> "))
+    check(op)
+    avaliacao(op)
+    return op
 
 start()
